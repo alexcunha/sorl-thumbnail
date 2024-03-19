@@ -157,7 +157,11 @@ class ImageFile(BaseImageFile):
 
     @property
     def url(self):
-        return self.storage.url(self.name)
+        # Modified
+        if settings.THUMBNAIL_FAST_URL:
+            return self.standard_storage.url(self.name)
+        else:
+            return self.storage.url(self.name)
 
     def read(self):
         f = self.storage.open(self.name)
