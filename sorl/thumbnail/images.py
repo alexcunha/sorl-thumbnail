@@ -8,7 +8,7 @@ from urllib.parse import quote, quote_plus, urlsplit, urlunsplit
 from urllib.request import urlopen, Request
 
 from django.core.files.base import File, ContentFile
-from django.core.files.storage import Storage  # , default_storage
+from django.core.files.storage import Storage, FileSystemStorage  # , default_storage
 from django.utils.encoding import force_str
 from django.utils.functional import LazyObject, empty
 from sorl.thumbnail import default
@@ -80,6 +80,7 @@ class ImageFile(BaseImageFile):
     _size = None
 
     def __init__(self, file_, storage=None):
+        self.standard_storage = FileSystemStorage()
         if not file_:
             raise ThumbnailError('File is empty.')
 
